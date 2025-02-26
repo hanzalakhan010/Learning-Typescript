@@ -5,14 +5,15 @@ const menu = [
     { name: "Veggie", price: 9 },
 ]
 
-const cashInRegister = 100
+var cashInRegister = 100
 const orderQueue = []
+var nextOrderId = 0
 
 /**
  * Challenge: Add a utility function "addNewPizza" that takes a pizza object
  * and adds it to the menu.
  */
-function addNewPizza(pizza){
+function addNewPizza(pizza) {
     menu.push(pizza)
 }
 
@@ -24,17 +25,15 @@ function addNewPizza(pizza){
  *    (e.g. { pizza: selectedPizzaObjectFromStep1, status: "ordered" })
  * 4. returns the new order object (just in case we need it later)
  */
-function placeOrder(pizza){
-    for(let i= 0;i<menu.length;i++){
-        if (menu[i].name == pizza){
-            cashInRegister+=menu[i].price
-            order = { pizza: pizza, status: "ordered" }
+function placeOrder(pizza) {
+    for (let i = 0; i < menu.length; i++) {
+        console.log(pizza)
+        if (menu[i].name == pizza) {
+            nextOrderId++
+            cashInRegister += menu[i].price
+            order = { id_: nextOrderId, pizza: pizza, status: "ordered" }
             orderQueue.push(order)
             return order
-        } 
-        else{
-            console.log('This pizza is not fund')
-            return false
         }
     }
 }
@@ -46,3 +45,26 @@ function placeOrder(pizza){
  * 
  * Note: you'll need to ensure that we're adding IDs to our orders when we create new orders. You can use a global `nextOrderId` variable and increment it every time a new order is created to simulate real IDs being managed for us by a database.
  */
+
+function completeOrder(id_){
+    for(let i = 0;i<orderQueue.length;i++){
+        if (orderQueue[i].id_ === id_ ){
+            orderQueue[i].status = 'Completed'
+            return orderQueue[i]
+        }
+    }
+}
+
+addNewPizza({ name: "Chicken Bacon Ranch", cost: 12 })
+addNewPizza({ name: "BBQ Chicken", cost: 12 })
+addNewPizza({ name: "Spicy Sausage", cost: 11 })
+
+console.log("Menu:", menu)
+console.log("Order queue:", orderQueue)
+
+placeOrder("Chicken Bacon Ranch")
+completeOrder("1")
+console.log("Menu:", menu)
+
+// console.log("Cash in register:", cashInRegister)
+console.log("Order queue:", orderQueue)
