@@ -1,3 +1,4 @@
+
 const menu:Array<{ name: string, price: number }> = [
     { name: "Margherita", price: 8 },
     { name: "Pepperoni", price: 10 },
